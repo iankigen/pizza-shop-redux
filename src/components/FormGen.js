@@ -1,6 +1,8 @@
 import React from 'react';
 import { Field, Form as FinalForm } from 'react-final-form';
-import { Button, Divider, Grid, Header, Segment, Form } from "semantic-ui-react";
+import { Button, Divider, Grid, Header, Segment, Form, Menu } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { LOGIN } from "../constants/url-list";
 
 
 const FormInput = ({name, validate, type, icon, iconPosition, placeholder}) => (
@@ -51,9 +53,11 @@ class FormGen extends React.Component {
                                 {primaryButton}
                             </Button>
                             <Divider horizontal>Or</Divider>
-                            <Button as='a' primary fluid href={secondaryLink}>
-                                {secondaryButton}
-                            </Button>
+                            <Link to={secondaryLink}>
+                                <Button primary fluid>
+                                    {secondaryButton}
+                                </Button>
+                            </Link>
                             <Grid columns={1} relaxed>
                                 <Grid.Column>
                                     <Segment basic>

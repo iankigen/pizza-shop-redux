@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Container, Menu } from "semantic-ui-react";
-import {HOME, LOGIN, SIGNUP} from "../constants/url-list";
+import { Button, Container, Menu, Segment } from "semantic-ui-react";
+import { HOME, LOGIN, SIGNUP } from "../constants/url-list";
+import { Link } from "react-router-dom";
 
 export const Navbar = ({fixed}) => (
     <Menu
@@ -11,16 +12,22 @@ export const Navbar = ({fixed}) => (
         size='large'
     >
         <Container>
-            <Menu.Item as='a' active href={HOME}>
-                Pizza Shop
-            </Menu.Item>
+            <Link to={HOME}>
+                <Menu.Item active>
+                    Pizza Shop
+                </Menu.Item>
+            </Link>
             <Menu.Item position='right'>
-                <Button as='a' inverted={!fixed} href={LOGIN}>
-                    Log in
-                </Button>
-                <Button as='a' inverted={!fixed} primary={fixed} style={{marginLeft: '0.5em'}} href={SIGNUP}>
-                    Sign Up
-                </Button>
+                <Link to={LOGIN}>
+                    <Button as='a' inverted={!fixed} href={LOGIN}>
+                        Log in
+                    </Button>
+                </Link>
+                <Link to={SIGNUP}>
+                    <Button inverted={!fixed} primary={fixed} style={{marginLeft: '0.5em'}}>
+                        Sign Up
+                    </Button>
+                </Link>
             </Menu.Item>
         </Container>
     </Menu>
