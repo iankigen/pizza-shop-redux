@@ -1,0 +1,4 @@
+.landing-image {
+    background-image: url('/images/pizza.jpg') !important;
+    background-size: cover !important;
+}

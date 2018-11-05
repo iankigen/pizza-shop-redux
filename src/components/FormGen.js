@@ -1,8 +1,7 @@
 import React from 'react';
 import { Field, Form as FinalForm } from 'react-final-form';
-import { Button, Divider, Grid, Header, Segment, Form, Menu } from "semantic-ui-react";
+import { Button, Divider, Grid, Header, Segment, Form } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import { LOGIN } from "../constants/url-list";
 
 
 const FormInput = ({name, validate, type, icon, iconPosition, placeholder}) => (
@@ -30,7 +29,7 @@ class FormGen extends React.Component {
 
     render() {
         const {
-            formInputMetadata, formTitle, formFooter, primaryButton, secondaryButton, secondaryLink
+            formInputMetadata, formTitle, formFooter, primaryButton, secondaryButton, secondaryLink, loading
         } = this.props;
         return (
             <FinalForm
@@ -49,7 +48,7 @@ class FormGen extends React.Component {
                                 />
                             ))}
 
-                            <Button color='green' fluid type='submit' disabled={pristine || invalid}>
+                            <Button color='green' fluid type='submit' disabled={pristine || invalid} loading={loading}>
                                 {primaryButton}
                             </Button>
                             <Divider horizontal>Or</Divider>

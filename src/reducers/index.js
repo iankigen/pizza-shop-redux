@@ -1,9 +1,8 @@
 import { combineReducers } from 'redux'
-import { articles } from './article'
-
-const test = (state={ian: 'Ian'}, action) => state;
+import {alert} from "./alert";
+import {authentication} from "./user";
 
 export default combineReducers({
-    articles,
-    test,
+    alert,
+    authentication,
 })

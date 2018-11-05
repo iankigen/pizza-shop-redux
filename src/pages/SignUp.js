@@ -1,16 +1,16 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import { Grid } from 'semantic-ui-react'
 import ResponsiveContainer from "./Layout";
 import { composeValidators } from "./validators/utils";
 import { required } from "./validators";
 import FormGen from "../components/FormGen";
 import { LOGIN } from "../constants/url-list";
-
-const onSubmit = values => console.log('onSubmit', values);
+import { userActions } from "../actions/user";
 
 const SignUpInputMetadata = [
     {
-        name: 'fName',
+        name: 'username',
         validate: composeValidators(required),
         placeholder: 'Full Name',
         icon: 'user',
@@ -42,29 +42,43 @@ const SignUpInputMetadata = [
         type: 'password',
     }
 ];
-const SignUp = () => (
-    <ResponsiveContainer>
-        <Grid textAlign='center' style={{
-            fontSize: '4em',
-            fontWeight: 'normal',
-            marginBottom: 0,
-            marginTop: '3em',
-            height: '100%'
-        }} verticalAlign='middle'>
-            <Grid.Column style={{maxWidth: 450}}>
-                <FormGen
-                    formInputMetadata={SignUpInputMetadata}
-                    formTitle='SIGN UP PAGE'
-                    formFooter='Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
-                                            odio.'
-                    primaryButton='Sign Up'
-                    secondaryButton='Login Now'
-                    secondaryLink={LOGIN}
-                    onClickSubmit={onSubmit}
-                />
-            </Grid.Column>
-        </Grid>
-    </ResponsiveContainer>
-);
 
-export default SignUp
+class SignUp extends Component {
+    onSubmit = values => this.props.register(values, this.props.history);
+    render() {
+        const { loading } = this.props.authentication;
+        return (
+            <ResponsiveContainer>
+                <Grid textAlign='center' style={{
+                    fontSize: '4em',
+                    fontWeight: 'normal',
+                    marginBottom: 0,
+                    marginTop: '3em',
+                    height: '100%'
+                }} verticalAlign='middle'>
+                    <Grid.Column style={{maxWidth: 450}}>
+                        <FormGen
+                            formInputMetadata={SignUpInputMetadata}
+                            formTitle='SIGN UP PAGE'
+                            formFooter='Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+                                            odio.'
+                            primaryButton='Sign Up'
+                            secondaryButton='Login Now'
+                            loading={loading}
+                            secondaryLink={LOGIN}
+                            onClickSubmit={this.onSubmit}
+                        />
+                    </Grid.Column>
+                </Grid>
+            </ResponsiveContainer>
+        )
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    register: (data, history) => dispatch(userActions.register(data, history))
+});
+const mapStateToProps = state => ({...state});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

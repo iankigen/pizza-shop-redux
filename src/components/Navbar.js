@@ -1,34 +1,64 @@
 import React from 'react';
 import { Button, Container, Menu, Segment } from "semantic-ui-react";
-import { HOME, LOGIN, SIGNUP } from "../constants/url-list";
+import { CART, FEEDBACK, HOME, LOGIN, LOGOUT, ORDERS, PIZZA, SIGNUP } from "../constants/url-list";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
-export const Navbar = ({fixed}) => (
-    <Menu
-        fixed={fixed ? 'top' : null}
-        inverted={!fixed}
-        pointing={!fixed}
-        secondary={!fixed}
-        size='large'
+const Navbar = ({children, minHeight = 0, loggedIn}) => (
+    <Segment
+        inverted
+        textAlign='center'
+        style={{padding: '1em 0em', minHeight: minHeight}}
+        vertical
     >
-        <Container>
-            <Link to={HOME}>
-                <Menu.Item active>
-                    Pizza Shop
-                </Menu.Item>
-            </Link>
-            <Menu.Item position='right'>
-                <Link to={LOGIN}>
-                    <Button as='a' inverted={!fixed} href={LOGIN}>
-                        Log in
-                    </Button>
+        <Menu
+            inverted
+            pointing
+            secondary
+            size='large'
+        >
+            <Container>
+                <Link to={HOME}>
+                    <Menu.Item>HOME</Menu.Item>
                 </Link>
-                <Link to={SIGNUP}>
-                    <Button inverted={!fixed} primary={fixed} style={{marginLeft: '0.5em'}}>
-                        Sign Up
-                    </Button>
+                <Link to={PIZZA}>
+                    <Menu.Item>Menu</Menu.Item>
                 </Link>
-            </Menu.Item>
-        </Container>
-    </Menu>
+                {loggedIn && <Link to={ORDERS}>
+                    <Menu.Item>Orders</Menu.Item>
+                </Link>}
+                {loggedIn && <Link to={CART}>
+                    <Menu.Item>Cart</Menu.Item>
+                </Link>}
+                {loggedIn && <Link to={FEEDBACK}>
+                    <Menu.Item>Feedback</Menu.Item>
+                </Link>}
+
+                {!loggedIn && <Menu.Item position='right'>
+                    <Link to={LOGIN}>
+                        <Button inverted>
+                            Log in
+                        </Button>
+                    </Link>
+                    <Link to={SIGNUP}>
+                        <Button style={{marginLeft: '0.5em'}} inverted>
+                            Sign Up
+                        </Button>
+                    </Link>
+                </Menu.Item>}
+                {loggedIn && <Menu.Item position='right'>
+                    <Link to={LOGOUT}>
+                        <Button style={{marginLeft: '0.5em'}} inverted>
+                            Logout
+                        </Button>
+                    </Link>
+                </Menu.Item>}
+            </Container>
+        </Menu>
+        {children}
+    </Segment>
 );
+
+const mapStateToProps = state => ({...state.authentication})
+
+export default connect(mapStateToProps)(Navbar);
