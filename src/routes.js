@@ -9,8 +9,8 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import { Products } from "./pages/Products";
 import {
     HOME, LOGIN, SIGNUP, PIZZA, ADD_TO_CART, REMOVE_FROM_CART, PLACE_ORDER, ADMIN_LOGIN,
-    ADMIN_ADD_PIZZA, ADMIN_UPDATE_PIZZA, ADMIN_DELETE_PIZZA, ADMIN_ACCEPT_ORDER, ADMIN_DECLINE_ORDER, FEEDBACK,
-    LOGOUT, ADMIN_ADD_CATEGORY, ADMIN_UPDATE_CATEGORY, ADMIN_DELETE_CATEGORY, ADMIN_DASHBOARD, CART, ORDERS
+    ADMIN_ADD_PIZZA, ADMIN_UPDATE_PIZZA, ADMIN_ACCEPT_ORDER, ADMIN_DECLINE_ORDER, FEEDBACK,
+    LOGOUT, ADMIN_ADD_CATEGORY, ADMIN_UPDATE_CATEGORY, ADMIN_DASHBOARD, CART, ORDERS
 } from "./constants/url-list";
 import AddPizza from "./pages/admin/AddPizza";
 import UpdatePizza from "./pages/admin/UpdatePizza";
@@ -19,6 +19,8 @@ import { Orders } from "./pages/Orders";
 import Feedback from "./pages/Feedback";
 import { PrivateRoute } from "./components/PrivateRoute";
 import Logout from "./pages/Logout";
+import AddCategory from "./pages/admin/AddCategory";
+import UpdateCategory from "./pages/admin/UpdateCategory";
 
 
 export const Routes = () => (
@@ -36,16 +38,14 @@ export const Routes = () => (
         <PrivateRoute path={PLACE_ORDER} component={SignUp}/>
         <PrivateRoute path={FEEDBACK} component={Feedback}/>
 
-        <PrivateRoute path={ADMIN_LOGIN} component={AdminLogin}/>
-        <PrivateRoute path={ADMIN_DASHBOARD} component={AdminDashboard}/>
-        <PrivateRoute path={ADMIN_ADD_CATEGORY} component={AdminLogin}/>
-        <PrivateRoute path={ADMIN_UPDATE_CATEGORY} component={AdminLogin}/>
-        <PrivateRoute path={ADMIN_DELETE_CATEGORY} component={AdminLogin}/>
-        <PrivateRoute path={ADMIN_ADD_PIZZA} component={AddPizza}/>
-        <PrivateRoute path={ADMIN_UPDATE_PIZZA} component={UpdatePizza}/>
-        <PrivateRoute path={ADMIN_DELETE_PIZZA} component={AdminLogin}/>
-        <PrivateRoute path={ADMIN_ACCEPT_ORDER} component={AdminLogin}/>
-        <PrivateRoute path={ADMIN_DECLINE_ORDER} component={AdminLogin}/>
+        <Route path={ADMIN_LOGIN} component={AdminLogin}/>
+        <Route path={ADMIN_DASHBOARD} component={AdminDashboard}/>
+        <Route path={ADMIN_ADD_CATEGORY} component={AddCategory}/>
+        <Route path={ADMIN_UPDATE_CATEGORY} component={UpdateCategory}/>
+        <Route path={ADMIN_ADD_PIZZA} component={AddPizza}/>
+        <Route path={ADMIN_UPDATE_PIZZA} component={UpdatePizza}/>
+        <Route path={ADMIN_ACCEPT_ORDER} component={AdminLogin}/>
+        <Route path={ADMIN_DECLINE_ORDER} component={AdminLogin}/>
 
         <Route component={NoMatch}/>
     </Switch>

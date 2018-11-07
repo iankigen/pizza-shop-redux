@@ -3,7 +3,7 @@ export const authHeader = () => {
 
     if(user && user.token){
         return {
-            'Authorization': `Bearer ${user.token}`
+            'Authorization': `${user.token}`
         }
     } else {
         return {}

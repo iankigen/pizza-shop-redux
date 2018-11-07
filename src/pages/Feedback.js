@@ -1,9 +1,8 @@
 import React from 'react'
-import { Grid, Segment } from 'semantic-ui-react'
 import ProductsPageLayout from "./ProductsPageLayout";
 import { composeValidators } from "./validators/utils";
 import { required } from "./validators";
-import AdminFormGen from "../components/admin/AdminFormGen";
+import FormGenerator from "../components/admin/FormGenerator";
 
 const onSubmit = values => console.log('onSubmit', values);
 
@@ -19,23 +18,11 @@ const LoginInputMetadata = [
 
 const Feedback = () => (
         <ProductsPageLayout>
-            <Grid textAlign='center' style={{
-                fontSize: '4em',
-                marginBottom: '3.5em',
-                marginTop: '3.5em',
-                height: '100%'
-            }} verticalAlign='middle'>
-                <Segment>
-                    <Grid.Column style={{maxWidth: 850}}>
-                        <AdminFormGen
-                            formInputMetadata={LoginInputMetadata}
-                            formTitle='Give Feedback'
-                            primaryButton='Submit'
-                            onClickSubmit={onSubmit}
-                        />
-                    </Grid.Column>
-                </Segment>
-            </Grid>
+            <FormGenerator
+                formInputMetadata={LoginInputMetadata}
+                handleSubmit={onSubmit}
+                formTitle='Give Us Feedback'
+            />
         </ProductsPageLayout>
     )
 ;
