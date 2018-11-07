@@ -1,18 +1,14 @@
-import React from 'react'
-import { Grid, Segment } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import ProductsPageLayout from "./../ProductsPageLayout";
 import { composeValidators } from "./../validators/utils";
 import { required } from "./../validators";
-import AdminFormGen from "../../components/admin/AdminFormGen";
+import FormGenerator from "../../components/admin/FormGenerator";
+import { categoryActions } from "../../actions/category";
+import { category } from "../../reducers/category";
+import { pizzaActions } from "../../actions/pizza";
 
-const onSubmit = values => console.log('onSubmit', values);
-
-const options = [
-    {key: 'n', text: 'Veg', value: 'Veg'},
-    {key: 'nv', text: 'Non Veg', value: 'Non Veg'},
-];
-
-const LoginInputMetadata = [
+const pizzaDetailsInputMetadata = [
     {
         name: 'name',
         validate: composeValidators(required),
@@ -31,7 +27,6 @@ const LoginInputMetadata = [
                 name: 'category',
                 placeholder: 'Category',
                 type: 'select',
-                options: options
             },
         ]
     },
@@ -41,29 +36,55 @@ const LoginInputMetadata = [
         placeholder: 'Ingredients',
         type: 'textarea',
     },
+    {
+        name: 'image',
+        placeholder: 'Image',
+        type: 'file',
+    },
 ];
 
-const AddPizza = () => (
-        <ProductsPageLayout>
-            <Grid textAlign='center' style={{
-                fontSize: '4em',
-                marginBottom: '3.5em',
-                marginTop: '3.5em',
-                height: '100%'
-            }} verticalAlign='middle'>
-                <Segment>
-                    <Grid.Column style={{maxWidth: 850}}>
-                        <AdminFormGen
-                            formInputMetadata={LoginInputMetadata}
-                            formTitle='Add Pizza Details'
-                            primaryButton='Submit'
-                            onClickSubmit={onSubmit}
-                        />
-                    </Grid.Column>
-                </Segment>
-            </Grid>
-        </ProductsPageLayout>
-    )
-;
+class AddPizza extends Component {
+    componentDidMount(){
+        this.props.categories()
+    }
 
-export default AddPizza
+    onSubmit = values => this.props.postPizza(values, this.props.history);
+
+    serializeCategories = ({categories}) => {
+        const all_cat = [];
+        categories.map((category) => {
+            category['text'] = category.name;
+            category['value'] = category.id;
+            all_cat.push(category)
+        });
+        return all_cat
+    };
+
+    render() {
+        const { loading } = this.props.pizza;
+        const categories = this.serializeCategories(this.props.category);
+        return (
+            <ProductsPageLayout>
+                <FormGenerator
+                    formInputMetadata={pizzaDetailsInputMetadata}
+                    handleSubmit={this.onSubmit}
+                    formTitle='Add Pizza Details'
+                    options={categories}
+                    loading={loading}
+                />
+            </ProductsPageLayout>
+        )
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    categories: () => dispatch(categoryActions.getCategory()),
+    postPizza: (data, history) => dispatch(pizzaActions.postPizza(data, history))
+});
+
+const mapStateToProps = state => ({
+    category: state.category,
+    pizza: state.pizza
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPizza);
